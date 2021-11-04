@@ -1,5 +1,7 @@
 package link.infra.packwiz.vanillainstaller;
 
+import net.fabricmc.installer.util.Utils;
+
 import java.nio.file.Path;
 import java.util.Locale;
 
@@ -7,19 +9,17 @@ public class PathUtils {
 	private PathUtils() {}
 
 	public static Path getMinecraftPath() {
-		// TODO: stub
-		throw new UnsupportedOperationException();
+		return Utils.findDefaultInstallDir();
 	}
 
 	public static Path getGeneratedPath(String packName) {
-		// TODO: .minecraft/packwiz-packs/pack-name-here (append -1/etc. if it already exists)
-		throw new UnsupportedOperationException();
+		return getMinecraftPath().resolve("packwiz-packs").resolve(slugify(packName));
 	}
 
 	private static String slugify(String packName) {
 		return packName.toLowerCase(Locale.ROOT)
 			.replace(' ', '-')
-			.replaceAll("[\\x00-\\x1F\\x7F\"*/:<>?\\\\|]", "")
+			.replaceAll("[\\x00-\\x1F\\x7F\"*/:<>?\\\\|\\[\\]]", "-")
 			.replaceAll("-+", "-")
 			.replaceAll("^-|-$", "");
 	}

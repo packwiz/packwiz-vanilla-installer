@@ -1,4 +1,4 @@
-package link.infra.packwiz.vanillainstaller;
+package link.infra.packwiz.vanillainstaller.meta;
 
 import java.awt.*;
 import java.net.URI;

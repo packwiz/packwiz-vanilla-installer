@@ -1,9 +1,12 @@
 package link.infra.packwiz.vanillainstaller;
 
+import net.fabricmc.installer.Main;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.io.IOException;
 
 public class VanillaInstaller {
 
@@ -358,6 +361,7 @@ public class VanillaInstaller {
 		// TODO: implement browse buttons
 		// TODO: implement generated path / .minecraft buttons
 		// - warn if any path (other than .minecraft) already exists
+		// - warn if mods folder or packwiz.json in .minecraft is non-empty?
 		// TODO: implement refresh button
 
 		// TODO: when Fabric selected:
@@ -376,5 +380,23 @@ public class VanillaInstaller {
 
 		// TODO: implement next page (with install progress label + spinner)
 		// TODO: error display
+		// TODO: self version check?
+
+		nextButton.addActionListener(e -> {
+			try {
+				Main.main(new String[]{});
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		});
+
+		launcherPathField.setText(PathUtils.getMinecraftPath().toString());
+		gameDirectoryGeneratedPathButton.addActionListener(e -> {
+			// TODO: when empty, make error dialog
+			gameDirectoryField.setText(PathUtils.getGeneratedPath(installationNameField.getText()).toString());
+		});
+		gameDirectoryUseMcFolderButton.addActionListener(e -> {
+			gameDirectoryField.setText(launcherPathField.getText());
+		});
 	}
 }
