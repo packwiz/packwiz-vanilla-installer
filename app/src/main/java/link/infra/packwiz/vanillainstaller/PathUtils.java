@@ -21,8 +21,11 @@ public class PathUtils {
 		} else if (os.contains("mac")) {
 			return Paths.get(System.getProperty("user.home")).resolve("Library").resolve("Application Support").resolve("packwiz");
 		} else {
-			// TODO: a better location on linux?
-			return Paths.get(System.getProperty("user.home")).resolve("packwiz");
+			String xdgHome = System.getenv("XDG_DATA_HOME");
+			if (xdgHome != null) {
+				return Paths.get(xdgHome).resolve("packwiz");
+			}
+			return Paths.get(System.getProperty("user.home")).resolve(".local").resolve("share").resolve("packwiz");
 		}
 	}
 
